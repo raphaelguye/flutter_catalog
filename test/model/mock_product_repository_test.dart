@@ -1,5 +1,4 @@
 import 'package:flutter_catalog/model/mock_product_repository.dart';
-import 'package:flutter_catalog/model/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
