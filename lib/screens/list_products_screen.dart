@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_catalog/blocs/product/product.dart';
 import 'package:flutter_catalog/blocs/products/products.dart';
 import 'package:flutter_catalog/model/product.dart';
+import 'package:flutter_catalog/screens/product_screen.dart';
 
 class ListProductScreen extends StatelessWidget {
   @override
@@ -37,11 +39,11 @@ class ListProductScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {
-          return _productTile(products[index]);
+          return _productTile(products[index], context);
         });
   }
 
-  Widget _productTile(Product product) {
+  Widget _productTile(Product product, BuildContext context) {
     return ListTile(
       leading: product.icon,
       title: Text(product.name),
@@ -49,24 +51,15 @@ class ListProductScreen extends StatelessWidget {
       trailing: Text(product.priceCurrencyFormatted),
       onTap: () {
         print('product ${product.id} selected');
-      },
-    );
-  }
-
-  Widget _productCell(Product product) {
-    return GestureDetector(
-      child: Container(
-          padding: EdgeInsets.all(10),
-          child: Row(children: <Widget>[
-            Column(
-              children: <Widget>[Text(product.name), Text(product.description)],
-              crossAxisAlignment: CrossAxisAlignment.start,
-            ),
-            Spacer(),
-            Text(product.priceCurrencyFormatted)
-          ])),
-      onTap: () {
-        print('product ${product.id} selected');
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return BlocProvider<ProductBloc>(
+              create: (context) =>
+                  ProductBloc(ProductLoading())..add(LoadProduct(product)),
+              child: Scaffold(
+                appBar: AppBar(title: Text('Product Detail')),
+                body: ProductScreen(),
+              ));
+        }));
       },
     );
   }
