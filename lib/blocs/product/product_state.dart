@@ -9,9 +9,14 @@ abstract class ProductState extends Equatable {
 
 class ProductLoading extends ProductState {}
 
-class ProductNotLoaded extends ProductState {}
+class ProductNotLoaded extends ProductState {
+  // We should receive only the product id instead of the whole Entity
+  final Product product;
+  const ProductNotLoaded(this.product);
+}
 
 class ProductLoaded extends ProductState {
+  // We should receive only the product id instead of the whole Entity
   final Product product;
   const ProductLoaded(this.product);
 }

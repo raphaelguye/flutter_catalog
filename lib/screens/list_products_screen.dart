@@ -55,10 +55,7 @@ class ListProductScreen extends StatelessWidget {
           return BlocProvider<ProductBloc>(
               create: (context) =>
                   ProductBloc(ProductLoading())..add(LoadProduct(product)),
-              child: Scaffold(
-                appBar: AppBar(title: Text('Product Detail')),
-                body: ProductScreen(),
-              ));
+              child: ProductScreen());
         }));
       },
     );
